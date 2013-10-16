@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RogueFilter.Config;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -53,25 +54,11 @@ namespace RogueFilter
                     return;
                 }
 
-                string torblLookup = string.Format("{0}.{1}.{2}.{3}.tor.dan.me.uk", o[3], o[2], o[1], o[0]);
-                string prxblLookup = string.Format("{0}.{1}.{2}.{3}.proxies.dnsbl.sorbs.net", o[3], o[2], o[1], o[0]);
-
                 List<IPAddress> addr = new List<IPAddress>();
 
-                try
+                foreach (DnsblServer b in FilterList.Blacklists)
                 {
-                    addr.AddRange(Dns.GetHostAddresses(torblLookup));
-                }
-                catch (SocketException)
-                {
-                }
-
-                try
-                {
-                    addr.AddRange(Dns.GetHostAddresses(prxblLookup));
-                }
-                catch (SocketException)
-                {
+                    addr.AddRange(b.GetIPv4BlacklistResults(o));
                 }
 
                 if (addr.Count > 0)

@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="dnsblCheck.cs" />
+    <Compile Include="DnsblServer.cs" />
     <Compile Include="FilterList.cs" />
     <Compile Include="Config\FilterSection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
